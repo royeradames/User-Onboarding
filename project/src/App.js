@@ -36,20 +36,66 @@ function App() {
 
   //helper functions
   const getUsers = () => {
+    const url = 'https://reqres.in/api/users'
+    axios.get(url)
+      .then( res => {
+        setUsersInSystem(res.data.data)
 
+      })
+      .catch( err => {
+        debugger
+      })
   }
     //functions for forms.js
-  const postNewFriend = newUser => {
-
+  const postNewUser = newUser => {
+    const url = 'https://reqres.in/api/users'
+    axios.post(url, newUser)
+      .then( res => {
+        console.log(res)
+        setUsersInSystem([res.data.data, ...usersInSystem])
+        setFormValues(initialFormValues)
+      })
   }
   const inputChange = (name, value) => {
+    yup
+      //match name key on the formSchema
+      .reach(formSchema, name)
+      //we can then run validate using the value
+      .validate(value)
+      // if the validation is successful, we can clear the error message
+      .then(() => {
+        setFormErrors({
+          ...formErrors, [name]: ""
+        })
+      })
+      /* if the validation is unsuccessful, we can set the error message to the message returned from yup (that we created in our schema) */
+      .catch( err => {
+        setFormErrors({
+          ...formErrors, [name]: err.errors[0],
+        })
+      })
 
+    setFormValues({
+      ...formValues,
+      [name]:value //not an array. [ ] are acting like `${ }`
+    })
   }
   const checkboxChange = (name, isChecked) => {
-
+    //add checkbox input on formValues state
+    setFormValues({
+      ...formValues,
+      [name]:isChecked
+    })
   }
   const submit = () => {
-
+    //prepare new user data how the system accepts it
+    const newUser = {
+      username: formValues.name.trim(),
+      email: formValues.email.trim(),
+      password: formValues.password.trim(),
+      termsOfService: formValues.termsOfService.trim(),
+    }
+    postNewUser(newUser)
   }//end of functions for forms.js
   const displayAllUsers = () =>{
      (usersInSystem.map(user => <User key={user.id} details={user} />))
