@@ -8,14 +8,16 @@ export default function Forms({values, inputChange, checkboxChange, submit, disa
         submit()
     }
     const onCheckboxChange = e => {
-
+        const {name, checked} = e.target
+        checkboxChange(name, checked)
     }
 
     const onInputChange = e => {
-
+        const {name, value} = e.target
+        inputChange(name, value)
     }
     return(
-        <div>
+        <form className='form container'  onSubmit={onSubmit}>
             {/* Name */}
             <label>Name&nbsp;
                 <input 
@@ -48,13 +50,13 @@ export default function Forms({values, inputChange, checkboxChange, submit, disa
             <label>Terms of Service&nbsp;
                 <input 
                     onChange={onCheckboxChange}
-                    name='Terms of Service'
+                    name='termsOfService'
                     type='checkbox'
                     checked={values.termsOfService === true}
                 />
             </label>
             {/* A Submit button to send our form data to the server */}
             <button disable={disabled}>Submit</button>
-        </div>
+        </form>
     )
 }
