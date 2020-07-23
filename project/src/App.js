@@ -14,9 +14,8 @@ const initialFormValues = {
   first_name: '',
   last_name: '',
   email: '',
-  ///// DROPDOWN /////
   password: '',
-  ///// RADIO BUTTONS /////
+  role: '',
   termsOfService: false,
   
 }
@@ -52,7 +51,7 @@ function App() {
     const url = 'https://reqres.in/api/users'
     axios.post(url, newUser)
       .then( res => {
-        
+         
         setUsersInSystem([res.data, ...usersInSystem])
         setFormValues(initialFormValues)
       })
@@ -98,6 +97,7 @@ function App() {
       last_name: formValues.last_name.trim(),
       email: formValues.email.trim(),
       password: formValues.password.trim(),
+      role: formValues.role,
       termsOfService: formValues.termsOfService,
     }
     
@@ -123,22 +123,21 @@ function App() {
 
   return (
     <div className="container">
-      
-    <Forms 
-      values={formValues}
-      inputChange={inputChange}
-      checkboxChange={checkboxChange}
-      submit={submit}
-      disabled={disabled}
-      errors={formErrors}
-    />
-
-    {
-      usersInSystem.map(user => {
-        
-         return <User details={user} />
-      })
-    }
+      {/* Display the form */}
+      <Forms 
+        values={formValues}
+        inputChange={inputChange}
+        checkboxChange={checkboxChange}
+        submit={submit}
+        disabled={disabled}
+        errors={formErrors}
+      />
+      {/* Display all users */}
+      {
+        usersInSystem.map(user => {
+          return <User key={user.key} details={user} />
+        })
+      }
     </div>
   );
 }

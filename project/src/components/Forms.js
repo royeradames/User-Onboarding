@@ -65,7 +65,7 @@ export default function Forms({values, inputChange, checkboxChange, submit, disa
                 />
             </label>
             {/* A Submit button to send our form data to the server */}
-            <button disabled={disabled}>Submit</button>
+            <button disabled={disabled} className='btn btn-disabled'>Submit</button>
 
             {/* Display errors */}
             <div className='errors'>
