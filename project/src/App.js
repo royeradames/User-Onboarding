@@ -11,7 +11,8 @@ import User from './components/users'
 //inital 1 renden values
 const initialFormValues = {
   ///// TEXT INPUTS /////
-  name: '',
+  first_name: '',
+  last_name: '',
   email: '',
   ///// DROPDOWN /////
   password: '',
@@ -20,7 +21,8 @@ const initialFormValues = {
   
 }
 const initialFormErrors = {
-  name: '',
+  first_name: '',
+  last_name: '',
   email: '',
   password: '',
 }
@@ -90,15 +92,18 @@ function App() {
   const submit = () => {
     //prepare new user data how the system accepts it
     const newUser = {
-      username: formValues.name.trim(),
+      first_name: formValues.first_name.trim(),
+      last_name: formValues.last_name.trim(),
       email: formValues.email.trim(),
       password: formValues.password.trim(),
-      termsOfService: formValues.termsOfService.trim(),
+      termsOfService: formValues.termsOfService,
     }
     postNewUser(newUser)
   }//end of functions for forms.js
   const displayAllUsers = () =>{
-     (usersInSystem.map(user => <User key={user.id} details={user} />))
+    return usersInSystem.map(user => {
+       return <User details={user} />
+     })
   }
   //useEffects- rerender components
   useEffect(() => {
@@ -124,7 +129,12 @@ function App() {
       errors={formErrors}
     />
 
-    {displayAllUsers}
+    {
+      usersInSystem.map(user => {
+        debugger
+         return <User details={user} />
+      })
+    }
     </div>
   );
 }

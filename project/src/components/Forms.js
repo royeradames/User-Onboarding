@@ -18,12 +18,21 @@ export default function Forms({values, inputChange, checkboxChange, submit, disa
     }
     return(
         <form className='form container'  onSubmit={onSubmit}>
-            {/* Name */}
-            <label>Name&nbsp;
+            {/* First Name */}
+            <label>First name&nbsp;
                 <input 
-                    value={values.name}
+                    value={values.first_name}
                     onChange={onInputChange}
-                    name='name'
+                    name='first_name'
+                    type='text'
+                />
+            </label>
+            {/* Last Name */}
+            <label>Last name&nbsp;
+                <input 
+                    value={values.last_name}
+                    onChange={onInputChange}
+                    name='last_name'
                     type='text'
                 />
             </label>
@@ -34,7 +43,7 @@ export default function Forms({values, inputChange, checkboxChange, submit, disa
                     value={values.email}
                     onChange={onInputChange}
                     name='email'
-                    type='text'
+                    type='email'
                 />
             </label>
             {/* Password */}
@@ -43,7 +52,7 @@ export default function Forms({values, inputChange, checkboxChange, submit, disa
                     value={values.password}
                     onChange={onInputChange}
                     name='password'
-                    type='text'
+                    type='password'
                 />
             </label>
             {/* Terms of Service (checkbox) */}
@@ -57,6 +66,15 @@ export default function Forms({values, inputChange, checkboxChange, submit, disa
             </label>
             {/* A Submit button to send our form data to the server */}
             <button disable={disabled}>Submit</button>
+
+            {/* Display errors */}
+            <div className='errors'>
+                <div>{errors.first_name}</div>
+                <div>{errors.last_name}</div>
+                <div>{errors.email}</div>
+                <div>{errors.password}</div>
+                <div>{errors.termsOfService}</div>
+            </div>
         </form>
     )
 }
