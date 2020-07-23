@@ -42,10 +42,9 @@ function App() {
     axios.get(url)
       .then( res => {
         setUsersInSystem(res.data.data)
-
       })
       .catch( err => {
-        debugger
+        
       })
   }
     //functions for forms.js
@@ -53,9 +52,12 @@ function App() {
     const url = 'https://reqres.in/api/users'
     axios.post(url, newUser)
       .then( res => {
-        console.log(res)
-        setUsersInSystem([res.data.data, ...usersInSystem])
+        
+        setUsersInSystem([res.data, ...usersInSystem])
         setFormValues(initialFormValues)
+      })
+      .catch(res =>{
+        
       })
   }
   const inputChange = (name, value) => {
@@ -98,16 +100,18 @@ function App() {
       password: formValues.password.trim(),
       termsOfService: formValues.termsOfService,
     }
+    
     postNewUser(newUser)
   }//end of functions for forms.js
-  const displayAllUsers = () =>{
-    return usersInSystem.map(user => {
-       return <User details={user} />
-     })
-  }
+  // const displayAllUsers = () =>{
+  //   return usersInSystem.map(user => {
+  //      return <User details={user} />
+  //    })
+  // }
   //useEffects- rerender components
   useEffect(() => {
     getUsers()
+    
   }, [])
 
     //ADJUST THE STATUS OF `disabled` EVERY TIME `formValues` CHANGES
@@ -131,7 +135,7 @@ function App() {
 
     {
       usersInSystem.map(user => {
-        debugger
+        
          return <User details={user} />
       })
     }
